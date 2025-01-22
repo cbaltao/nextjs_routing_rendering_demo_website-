@@ -1,26 +1,11 @@
-import classes from "@/app/globals.css";
-import NewsList from "@/components/news/news-list";
-import Link from "next/link";
+import { DUMMY_NEWS } from "@/dummy-news";
+import NewsList from "@/components/news-list";
 
 export default function NewsPage() {
-  const news1 = {
-    title: "New News!",
-    content: "NEWSSS",
-  };
-
-  const news2 = {
-    title: "New New News!",
-    content: "NEWSSS",
-  };
-
-  const displayNews = [news1, news2];
-
   return (
     <>
-      <h1>News List</h1>
-      <ul className={classes["news-list"]}>
-        <NewsList news={displayNews} />
-      </ul>
+      <h1>News Page</h1>
+      <NewsList news={DUMMY_NEWS} />
     </>
   );
 }
