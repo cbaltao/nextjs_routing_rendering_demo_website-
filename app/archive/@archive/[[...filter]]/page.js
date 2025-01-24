@@ -3,6 +3,7 @@ import {
   getAvailableNewsMonths,
   getAvailableNewsYears,
   getNewsForYear,
+  getNewsForYearAndMonth,
 } from "@/lib/news";
 import Link from "next/link";
 
@@ -22,10 +23,25 @@ export default function FilteredNewsPage({ params }) {
     links = getAvailableNewsMonths(selectedYear);
   }
 
+  if (selectedYear && selectedMonth) {
+    news = getNewsForYearAndMonth(selectedYear, selectedMonth);
+    links = [];
+  }
+
+  //Fall back content...
   let newsContent = <p>No news found for the selected period.</p>;
 
   if (news && news.length > 0) {
     newsContent = <NewsList news={news} />;
+  }
+
+  //'+' acts like a explicit cast for strings that use numbers (Unary)
+  if (
+    (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+    (selectedMonth &&
+      !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+  ) {
+    throw new Error("Invalid filter.");
   }
 
   return (
@@ -37,9 +53,12 @@ export default function FilteredNewsPage({ params }) {
               const href = selectedYear
                 ? `/archive/${selectedYear}/${link}`
                 : `/archive/${link}`;
-              <li key={link}>
-                <Link href={href}>{link}</Link>
-              </li>;
+
+              return (
+                <li key={link}>
+                  <Link href={href}>{link}</Link>
+                </li>
+              );
             })}
           </ul>
         </nav>
