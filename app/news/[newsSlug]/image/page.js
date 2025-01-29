@@ -13,7 +13,7 @@ export default function ImagePage({ params }) {
 
   return (
     <div className="fullscreen-image">
-      <img src={`/images/news/${newsItem.image}`} />
+      <img className="imgFit" src={`/images/news/${newsItem.image}`} />
     </div>
   );
 }
